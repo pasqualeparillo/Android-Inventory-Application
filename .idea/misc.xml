@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/drawable/ic_baseline_blur_on_24.xml" value="0.236" />
+        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_assessment_list.xml" value="0.25" />
+        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_class_list.xml" value="0.1322463768115942" />
+        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_course_add.xml" value="0.10462962962962963" />
+        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_course_list.xml" value="0.1" />
+        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_main.xml" value="0.17708333333333334" />
+        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/menu/menu_courselist.xml" value="0.25" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
