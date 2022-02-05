@@ -2,33 +2,30 @@ package com.example.c196_project.Repositories;
 
 import android.app.Application;
 
-import com.example.c196_project.DAO.AssessmentDAO;
-
+import com.example.c196_project.DAO.CourseDAO;
 import com.example.c196_project.DB.AssessmentDatabase;
-import com.example.c196_project.Entities.AssessmentEntity;
+import com.example.c196_project.DB.CourseDatabase;
+import com.example.c196_project.Entities.CourseEntity;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class AssessmentRepository {
-    private final AssessmentDAO mAssessmentDAO;
+public class CourseRepository {
+    private final CourseDAO mCourseDAO;
     private static final int NUMBER_OF_THREADS=4;
     static final ExecutorService databaseExecutor= Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-    public List<AssessmentEntity>mAllAssessments;
+    public List<CourseEntity> mAllCourses;
 
-
-    public AssessmentRepository(Application application) {
-        AssessmentDatabase db= AssessmentDatabase.getDatabase(application);
-        mAssessmentDAO=db.assessmentDAO();
+    public CourseRepository(Application application) {
+        CourseDatabase db= CourseDatabase.getDatabase(application);
+        mCourseDAO=db.courseDAO();
     }
 
-    /**
-     * Insert passed assessment
-     */
-    public void insertAssessment(AssessmentEntity assessment) {
+
+    public void insertCourse(CourseEntity course) {
         databaseExecutor.execute(()-> {
-            mAssessmentDAO.insert(assessment);
+            mCourseDAO.insert(course);
         });
         try {
             Thread.sleep(1000);
@@ -38,12 +35,12 @@ public class AssessmentRepository {
     }
 
     /**
-     * Delete passed assessment
-     * @param assessment passed assessment
+     * Delete passed course
+     * @param course passed course
      */
-    public void deleteAssessment(AssessmentEntity assessment) {
+    public void deleteCourse(CourseEntity course) {
         databaseExecutor.execute(()-> {
-            mAssessmentDAO.delete(assessment);
+            mCourseDAO.delete(course);
         });
         try {
             Thread.sleep(1000);
@@ -54,11 +51,11 @@ public class AssessmentRepository {
 
     /**
      * Update passed assessment
-     * @param assessment passed assessment
+     * @param course passed course
      */
-    public void updateAssessment(AssessmentEntity assessment) {
+    public void updateAssessment(CourseEntity course) {
         databaseExecutor.execute(()-> {
-            mAssessmentDAO.update(assessment);
+            mCourseDAO.update(course);
         });
         try {
             Thread.sleep(1000);
@@ -69,31 +66,31 @@ public class AssessmentRepository {
 
 
     /**
-     * Get all assessments
+     * Get all courses
      */
-    public List<AssessmentEntity> getAllAssessments(AssessmentEntity assessment) {
+    public List<CourseEntity> getAllCourses(CourseEntity course) {
         databaseExecutor.execute(()-> {
-           mAssessmentDAO.getAllAssessments();
+            mCourseDAO.getAllCourses();
         });
         try {
             Thread.sleep(1000);
         }catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return mAllAssessments;
+        return mAllCourses;
     }
     /**
-     * Delete all assessments
+     * Delete all courses
      */
-    public List<AssessmentEntity> deleteAllAssessments() {
+    public List<CourseEntity> deleteAllAssessments() {
         databaseExecutor.execute(()-> {
-            mAssessmentDAO.deleteAll();
+            mCourseDAO.deleteAll();
         });
         try {
             Thread.sleep(1000);
         }catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return mAllAssessments;
+        return mAllCourses;
     }
 }

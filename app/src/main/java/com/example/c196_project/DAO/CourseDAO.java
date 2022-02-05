@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.c196_project.Entities.CourseEntity;
 
@@ -26,4 +27,7 @@ public interface CourseDAO {
 
     @Query("SELECT * FROM Courses ORDER BY course_id ASC")
     List<CourseEntity> getAllCourses();
+
+    @Update
+    void update(CourseEntity course);
 }

@@ -3,32 +3,33 @@ package com.example.c196_project.Repositories;
 import android.app.Application;
 
 import com.example.c196_project.DAO.AssessmentDAO;
-
+import com.example.c196_project.DAO.CourseDAO;
+import com.example.c196_project.DAO.InstructorDAO;
+import com.example.c196_project.DAO.TermDAO;
 import com.example.c196_project.DB.AssessmentDatabase;
-import com.example.c196_project.Entities.AssessmentEntity;
+import com.example.c196_project.DB.InstructorDatabase;
+import com.example.c196_project.Entities.CourseEntity;
+import com.example.c196_project.Entities.InstructorEntity;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class AssessmentRepository {
-    private final AssessmentDAO mAssessmentDAO;
+public class InstructorRepository {
+    private final InstructorDAO mInstructorDAO;
     private static final int NUMBER_OF_THREADS=4;
     static final ExecutorService databaseExecutor= Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-    public List<AssessmentEntity>mAllAssessments;
+    public List<InstructorEntity> mAllInstructors;
 
+    public InstructorRepository(Application application) {
+        InstructorDatabase db= InstructorDatabase.getDatabase(application);
+        mInstructorDAO=db.instructorDAO();
 
-    public AssessmentRepository(Application application) {
-        AssessmentDatabase db= AssessmentDatabase.getDatabase(application);
-        mAssessmentDAO=db.assessmentDAO();
     }
 
-    /**
-     * Insert passed assessment
-     */
-    public void insertAssessment(AssessmentEntity assessment) {
+    public void insertInstructor(InstructorEntity instructor) {
         databaseExecutor.execute(()-> {
-            mAssessmentDAO.insert(assessment);
+            mInstructorDAO.insert(instructor);
         });
         try {
             Thread.sleep(1000);
@@ -38,12 +39,12 @@ public class AssessmentRepository {
     }
 
     /**
-     * Delete passed assessment
-     * @param assessment passed assessment
+     * Delete passed instructor
+     * @param instructor passed instructor
      */
-    public void deleteAssessment(AssessmentEntity assessment) {
+    public void deleteInstructor(InstructorEntity instructor) {
         databaseExecutor.execute(()-> {
-            mAssessmentDAO.delete(assessment);
+            mInstructorDAO.delete(instructor);
         });
         try {
             Thread.sleep(1000);
@@ -53,12 +54,12 @@ public class AssessmentRepository {
     }
 
     /**
-     * Update passed assessment
-     * @param assessment passed assessment
+     * Update passed instructor
+     * @param instructor passed instructor
      */
-    public void updateAssessment(AssessmentEntity assessment) {
+    public void updateInstructor(InstructorEntity instructor) {
         databaseExecutor.execute(()-> {
-            mAssessmentDAO.update(assessment);
+            mInstructorDAO.update(instructor);
         });
         try {
             Thread.sleep(1000);
@@ -69,31 +70,31 @@ public class AssessmentRepository {
 
 
     /**
-     * Get all assessments
+     * Get all instructors
      */
-    public List<AssessmentEntity> getAllAssessments(AssessmentEntity assessment) {
+    public List<InstructorEntity> getAllInstructors(InstructorEntity instructor) {
         databaseExecutor.execute(()-> {
-           mAssessmentDAO.getAllAssessments();
+            mInstructorDAO.getAllInstructors();
         });
         try {
             Thread.sleep(1000);
         }catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return mAllAssessments;
+        return mAllInstructors;
     }
     /**
-     * Delete all assessments
+     * Delete all courses
      */
-    public List<AssessmentEntity> deleteAllAssessments() {
+    public List<InstructorEntity> deleteAllInstructors() {
         databaseExecutor.execute(()-> {
-            mAssessmentDAO.deleteAll();
+            mInstructorDAO.deleteAll();
         });
         try {
             Thread.sleep(1000);
         }catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return mAllAssessments;
+        return mAllInstructors;
     }
 }

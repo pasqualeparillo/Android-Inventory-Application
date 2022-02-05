@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.c196_project.Entities.InstructorEntity;
 
@@ -26,4 +27,7 @@ public interface InstructorDAO {
 
     @Query("SELECT * FROM Instructors ORDER BY instructor_id ASC")
     List<InstructorEntity> getAllInstructors();
+
+    @Update
+    void update(InstructorEntity instructor);
 }

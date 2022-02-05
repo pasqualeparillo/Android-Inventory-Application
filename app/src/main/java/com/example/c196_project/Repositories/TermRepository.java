@@ -3,32 +3,34 @@ package com.example.c196_project.Repositories;
 import android.app.Application;
 
 import com.example.c196_project.DAO.AssessmentDAO;
-
+import com.example.c196_project.DAO.CourseDAO;
+import com.example.c196_project.DAO.InstructorDAO;
+import com.example.c196_project.DAO.TermDAO;
 import com.example.c196_project.DB.AssessmentDatabase;
-import com.example.c196_project.Entities.AssessmentEntity;
+import com.example.c196_project.DB.TermDatabase;
+import com.example.c196_project.Entities.InstructorEntity;
+import com.example.c196_project.Entities.TermEntity;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class AssessmentRepository {
-    private final AssessmentDAO mAssessmentDAO;
+public class TermRepository {
+    private final TermDAO mTermDAO;
     private static final int NUMBER_OF_THREADS=4;
     static final ExecutorService databaseExecutor= Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-    public List<AssessmentEntity>mAllAssessments;
+    public List<TermEntity> mAllTerms;
 
 
-    public AssessmentRepository(Application application) {
-        AssessmentDatabase db= AssessmentDatabase.getDatabase(application);
-        mAssessmentDAO=db.assessmentDAO();
+    public TermRepository(Application application) {
+        TermDatabase db= TermDatabase.getDatabase(application);
+        mTermDAO=db.termDAO();
+
     }
 
-    /**
-     * Insert passed assessment
-     */
-    public void insertAssessment(AssessmentEntity assessment) {
+    public void insertTerm(TermEntity term) {
         databaseExecutor.execute(()-> {
-            mAssessmentDAO.insert(assessment);
+            mTermDAO.insert(term);
         });
         try {
             Thread.sleep(1000);
@@ -38,12 +40,12 @@ public class AssessmentRepository {
     }
 
     /**
-     * Delete passed assessment
-     * @param assessment passed assessment
+     * Delete passed term
+     * @param term passed terms
      */
-    public void deleteAssessment(AssessmentEntity assessment) {
+    public void deleteTerm(TermEntity term) {
         databaseExecutor.execute(()-> {
-            mAssessmentDAO.delete(assessment);
+            mTermDAO.delete(term);
         });
         try {
             Thread.sleep(1000);
@@ -53,12 +55,12 @@ public class AssessmentRepository {
     }
 
     /**
-     * Update passed assessment
-     * @param assessment passed assessment
+     * Update passed term
+     * @param term passed course
      */
-    public void updateAssessment(AssessmentEntity assessment) {
+    public void updateTerm(TermEntity term) {
         databaseExecutor.execute(()-> {
-            mAssessmentDAO.update(assessment);
+            mTermDAO.update(term);
         });
         try {
             Thread.sleep(1000);
@@ -69,31 +71,32 @@ public class AssessmentRepository {
 
 
     /**
-     * Get all assessments
+     * Get all terms
      */
-    public List<AssessmentEntity> getAllAssessments(AssessmentEntity assessment) {
+    public List<TermEntity> getAllTerms(TermEntity course) {
         databaseExecutor.execute(()-> {
-           mAssessmentDAO.getAllAssessments();
+            mTermDAO.getAllTerms();
         });
         try {
             Thread.sleep(1000);
         }catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return mAllAssessments;
+        return mAllTerms;
     }
     /**
-     * Delete all assessments
+     * Delete all terms
      */
-    public List<AssessmentEntity> deleteAllAssessments() {
+    public List<TermEntity> deleteAllTerm() {
         databaseExecutor.execute(()-> {
-            mAssessmentDAO.deleteAll();
+            mTermDAO.deleteAll();
         });
         try {
             Thread.sleep(1000);
         }catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return mAllAssessments;
+        return mAllTerms;
     }
+
 }

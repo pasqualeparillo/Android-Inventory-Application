@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.c196_project.Entities.TermEntity;
 
@@ -26,4 +27,7 @@ public interface TermDAO {
 
     @Query("SELECT * FROM Terms ORDER BY term_id ASC")
     List<TermEntity> getAllTerms();
+
+    @Update
+    void update(TermEntity term);
 }
