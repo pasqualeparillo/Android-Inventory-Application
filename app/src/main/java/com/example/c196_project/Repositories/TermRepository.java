@@ -73,13 +73,14 @@ public class TermRepository {
     /**
      * Get all terms
      */
-    public List<TermEntity> getAllTerms(TermEntity course) {
-        databaseExecutor.execute(()-> {
-            mTermDAO.getAllTerms();
+    public List<TermEntity> getAllTerms(){
+        databaseExecutor.execute(()->{
+            mAllTerms= mTermDAO.getAllTerms();
         });
+
         try {
             Thread.sleep(1000);
-        }catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return mAllTerms;

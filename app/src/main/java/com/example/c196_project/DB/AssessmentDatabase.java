@@ -20,11 +20,12 @@ public abstract class AssessmentDatabase extends RoomDatabase {
     public static AssessmentDatabase getDatabase(final Context context) {
         if(INSTANCE == null) {
             synchronized (AssessmentDatabase.class) {
-                INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AssessmentDatabase.class, "assessmentDatabase")
-                        .fallbackToDestructiveMigration()
-                        .build();
+                if(INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AssessmentDatabase.class, "assessmentDatabase")
+                            .fallbackToDestructiveMigration()
+                            .build();
+                }
             }
-            return INSTANCE;
         }
         return INSTANCE;
     }

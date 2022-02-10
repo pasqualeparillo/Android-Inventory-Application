@@ -8,6 +8,7 @@ import com.example.c196_project.DAO.InstructorDAO;
 import com.example.c196_project.DAO.TermDAO;
 import com.example.c196_project.DB.AssessmentDatabase;
 import com.example.c196_project.DB.InstructorDatabase;
+import com.example.c196_project.Entities.AssessmentEntity;
 import com.example.c196_project.Entities.CourseEntity;
 import com.example.c196_project.Entities.InstructorEntity;
 
@@ -72,13 +73,14 @@ public class InstructorRepository {
     /**
      * Get all instructors
      */
-    public List<InstructorEntity> getAllInstructors(InstructorEntity instructor) {
-        databaseExecutor.execute(()-> {
-            mInstructorDAO.getAllInstructors();
+    public List<InstructorEntity> getAllInstructors(){
+        databaseExecutor.execute(()->{
+            mAllInstructors= mInstructorDAO.getAllInstructors();
         });
+
         try {
             Thread.sleep(1000);
-        }catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return mAllInstructors;

@@ -16,22 +16,20 @@ import com.example.c196_project.DAO.InstructorDAO;
 import com.example.c196_project.DAO.TermDAO;
 import com.example.c196_project.Entities.CourseEntity;
 
-@Database(entities = {CourseEntity.class}, version = 2, exportSchema = false)
+@Database(entities = {CourseEntity.class}, version = 3, exportSchema = false)
 public abstract class CourseDatabase extends RoomDatabase {
-
     public abstract CourseDAO courseDAO();
-
-
     private static volatile CourseDatabase INSTANCE;
 
     public static CourseDatabase getDatabase(final Context context) {
         if(INSTANCE == null) {
             synchronized (CourseDatabase.class) {
-                INSTANCE = Room.databaseBuilder(context.getApplicationContext(), CourseDatabase.class, "courseDatabase")
-                        .fallbackToDestructiveMigration()
-                        .build();
+                if(INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), CourseDatabase.class, "courseDatabase")
+                            .fallbackToDestructiveMigration()
+                            .build();
+                }
             }
-            return INSTANCE;
         }
         return INSTANCE;
     }

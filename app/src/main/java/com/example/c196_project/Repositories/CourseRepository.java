@@ -5,6 +5,7 @@ import android.app.Application;
 import com.example.c196_project.DAO.CourseDAO;
 import com.example.c196_project.DB.AssessmentDatabase;
 import com.example.c196_project.DB.CourseDatabase;
+import com.example.c196_project.Entities.AssessmentEntity;
 import com.example.c196_project.Entities.CourseEntity;
 
 import java.util.List;
@@ -68,13 +69,14 @@ public class CourseRepository {
     /**
      * Get all courses
      */
-    public List<CourseEntity> getAllCourses(CourseEntity course) {
-        databaseExecutor.execute(()-> {
-            mCourseDAO.getAllCourses();
+    public List<CourseEntity> getAllCourses(){
+        databaseExecutor.execute(()->{
+            mAllCourses= mCourseDAO.getAllCourses();
         });
+
         try {
             Thread.sleep(1000);
-        }catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return mAllCourses;

@@ -71,13 +71,16 @@ public class AssessmentRepository {
     /**
      * Get all assessments
      */
-    public List<AssessmentEntity> getAllAssessments(AssessmentEntity assessment) {
-        databaseExecutor.execute(()-> {
-           mAssessmentDAO.getAllAssessments();
+
+
+    public List<AssessmentEntity> getAllAssessments(){
+        databaseExecutor.execute(()->{
+            mAllAssessments= mAssessmentDAO.getAllAssessments();
         });
+
         try {
             Thread.sleep(1000);
-        }catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
         return mAllAssessments;
