@@ -2,13 +2,8 @@ package com.example.c196_project.Repositories;
 
 import android.app.Application;
 
-import com.example.c196_project.DAO.AssessmentDAO;
-import com.example.c196_project.DAO.CourseDAO;
-import com.example.c196_project.DAO.InstructorDAO;
 import com.example.c196_project.DAO.TermDAO;
-import com.example.c196_project.DB.AssessmentDatabase;
 import com.example.c196_project.DB.TermDatabase;
-import com.example.c196_project.Entities.InstructorEntity;
 import com.example.c196_project.Entities.TermEntity;
 
 import java.util.List;

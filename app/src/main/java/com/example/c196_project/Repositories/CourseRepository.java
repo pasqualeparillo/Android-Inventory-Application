@@ -51,10 +51,10 @@ public class CourseRepository {
     }
 
     /**
-     * Update passed assessment
+     * Update passed course
      * @param course passed course
      */
-    public void updateAssessment(CourseEntity course) {
+    public void updateCourse(CourseEntity course) {
         databaseExecutor.execute(()-> {
             mCourseDAO.update(course);
         });

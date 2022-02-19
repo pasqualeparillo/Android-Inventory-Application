@@ -21,20 +21,29 @@ public class CourseEntity {
     private String course_status;
     @ColumnInfo(name = "course_note")
     private String course_note;
+    @ColumnInfo(name = "course_alert")
+    private boolean course_alert;
     @ColumnInfo(name = "term_id")
     private int term_id;
-    @ColumnInfo(name = "assessment_id")
-    private int assessment_id;
+    @ColumnInfo(name = "instructor_name")
+    private String instructor_name;
+    @ColumnInfo(name = "instructor_phone")
+    private String instructor_phone;
+    @ColumnInfo(name = "instructor_email")
+    private String instructor_email;
 
-    public CourseEntity(int course_id, String course_title, String course_start_date, String course_end_date, String course_status, String course_note, int term_id, int assessment_id) {
+    public CourseEntity(int course_id, String course_title, String course_start_date, String course_end_date, String course_status, String course_note,boolean course_alert, int term_id, String instructor_name, String instructor_phone, String instructor_email) {
         this.course_id = course_id;
         this.course_title = course_title;
         this.course_start_date = course_start_date;
         this.course_end_date = course_end_date;
         this.course_status = course_status;
         this.course_note = course_note;
+        this.course_alert = course_alert;
         this.term_id = term_id;
-        this.assessment_id = assessment_id;
+        this.instructor_name = instructor_name;
+        this.instructor_phone = instructor_phone;
+        this.instructor_email = instructor_email;
     }
 
     public int getCourse_id() {
@@ -85,6 +94,14 @@ public class CourseEntity {
         this.course_note = course_note;
     }
 
+    public boolean isCourse_alert() {
+        return course_alert;
+    }
+
+    public void setCourse_alert(boolean course_alert) {
+        this.course_alert = course_alert;
+    }
+
     public int getTerm_id() {
         return term_id;
     }
@@ -93,11 +110,27 @@ public class CourseEntity {
         this.term_id = term_id;
     }
 
-    public int getAssessment_id() {
-        return assessment_id;
+    public String getInstructor_name() {
+        return instructor_name;
     }
 
-    public void setAssessment_id(int assessment_id) {
-        this.assessment_id = assessment_id;
+    public void setInstructor_name(String instructor_name) {
+        this.instructor_name = instructor_name;
+    }
+
+    public String getInstructor_phone() {
+        return instructor_phone;
+    }
+
+    public void setInstructor_phone(String instructor_phone) {
+        this.instructor_phone = instructor_phone;
+    }
+
+    public String getInstructor_email() {
+        return instructor_email;
+    }
+
+    public void setInstructor_email(String instructor_email) {
+        this.instructor_email = instructor_email;
     }
 }

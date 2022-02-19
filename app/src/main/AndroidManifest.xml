@@ -22,7 +22,8 @@
         <activity
             android:name=".UI.Course.CourseDetail"
             android:exported="false"
-            android:label="Course Details"/>
+            android:label="Course Details"
+            android:parentActivityName=".UI.Course.CourseList"/>
         <activity
             android:name=".UI.Term.TermList"
             android:exported="false"
@@ -39,22 +40,6 @@
             android:label="Term Details"
             android:parentActivityName=".UI.Term.TermList" />
         <activity
-            android:name=".UI.Instructor.InstructorDetail"
-            android:exported="false"
-            android:label="Instructor Details"
-            android:parentActivityName=".UI.Instructor.InstructorList"
-            />
-        <activity
-            android:name=".UI.Instructor.InstructorList"
-            android:exported="false"
-            android:label="Instructor List"
-            android:parentActivityName=".UI.MainActivity" />
-        <activity
-            android:name=".UI.Instructor.InstructorAdd"
-            android:exported="false"
-            android:label="Add Instructor"
-            android:parentActivityName=".UI.Instructor.InstructorList"/>
-        <activity
             android:name=".UI.Assessment.AssessmentAdd"
             android:exported="false"
             android:label="Add Assessment"
@@ -67,7 +52,8 @@
         <activity
             android:name=".UI.Assessment.AssessmentDetail"
             android:exported="false"
-            android:label="Assessment Details"/>
+            android:label="Assessment Details"
+            android:parentActivityName=".UI.Assessment.AssessmentList"/>
         <activity
             android:name=".UI.MainActivity"
             android:exported="true">

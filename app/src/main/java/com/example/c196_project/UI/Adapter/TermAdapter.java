@@ -10,11 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.c196_project.DB.TermDatabase;
-import com.example.c196_project.Entities.InstructorEntity;
 import com.example.c196_project.Entities.TermEntity;
 import com.example.c196_project.R;
-import com.example.c196_project.UI.Instructor.InstructorDetail;
 import com.example.c196_project.UI.Term.TermDetail;
 
 import java.util.List;
@@ -26,7 +23,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
 
         private TermViewHolder(View itemView){
             super(itemView);
-            termItemView=itemView.findViewById(R.id.textView6);
+            termItemView=itemView.findViewById(R.id.textView7);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -35,6 +32,9 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
                     Intent intent = new Intent(context, TermDetail.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("title", current.getTitle());
+                    intent.putExtra("startDate", current.getStartDate());
+                    intent.putExtra("endDate", current.getEndDate());
+                    intent.putExtra("termID", current.getId());
                     context.startActivity(intent);
                 }
             });
@@ -53,7 +53,7 @@ public class TermAdapter extends RecyclerView.Adapter<TermAdapter.TermViewHolder
     @NonNull
     @Override
     public TermAdapter.TermViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View termView=mInflater.inflate(R.layout.activity_term_detail, parent, false);
+        View termView=mInflater.inflate(R.layout.activity_term_item, parent, false);
         return new TermAdapter.TermViewHolder(termView);
     }
 

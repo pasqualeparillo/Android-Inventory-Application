@@ -11,15 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.example.c196_project.Entities.InstructorEntity;
 import com.example.c196_project.Entities.TermEntity;
 import com.example.c196_project.R;
-import com.example.c196_project.Repositories.InstructorRepository;
 import com.example.c196_project.Repositories.TermRepository;
-import com.example.c196_project.UI.Adapter.InstructorAdapter;
 import com.example.c196_project.UI.Adapter.TermAdapter;
-import com.example.c196_project.UI.Instructor.InstructorAdd;
-import com.example.c196_project.UI.Instructor.InstructorList;
 
 import java.util.List;
 
@@ -33,6 +28,7 @@ public class TermList extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view4);
         TermRepository repository = new TermRepository(getApplication());
         List<TermEntity> filteredTerms = repository.getAllTerms();
+
         TermAdapter adapter = new TermAdapter(getApplicationContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

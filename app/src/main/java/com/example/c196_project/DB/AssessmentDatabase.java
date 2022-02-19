@@ -7,12 +7,9 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.c196_project.DAO.AssessmentDAO;
-import com.example.c196_project.DAO.CourseDAO;
-import com.example.c196_project.DAO.InstructorDAO;
-import com.example.c196_project.DAO.TermDAO;
 import com.example.c196_project.Entities.AssessmentEntity;
 
-@Database(entities = {AssessmentEntity.class}, version = 2, exportSchema = false)
+@Database(entities = {AssessmentEntity.class}, version = 4, exportSchema = false)
 public abstract class AssessmentDatabase extends RoomDatabase {
     public abstract AssessmentDAO assessmentDAO();
     private static volatile AssessmentDatabase INSTANCE;

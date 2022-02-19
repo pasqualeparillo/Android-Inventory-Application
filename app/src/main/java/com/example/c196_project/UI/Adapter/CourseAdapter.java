@@ -14,6 +14,7 @@ import com.example.c196_project.Entities.AssessmentEntity;
 import com.example.c196_project.Entities.CourseEntity;
 import com.example.c196_project.R;
 import com.example.c196_project.UI.Assessment.AssessmentDetail;
+import com.example.c196_project.UI.Course.CourseDetail;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.CourseView
                 public void onClick(View view) {
                     int position = getAdapterPosition();
                     final CourseEntity current = mCourses.get(position);
-                    Intent intent = new Intent(context, AssessmentDetail.class);
+                    Intent intent = new Intent(context, CourseDetail.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("courseID", current.getCourse_id());
                     intent.putExtra("title", current.getCourse_title());
