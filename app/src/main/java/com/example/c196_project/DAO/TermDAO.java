@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.c196_project.Entities.CourseEntity;
 import com.example.c196_project.Entities.TermEntity;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public interface TermDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(List<TermEntity> term);
+
+    @Query("SELECT * FROM Terms WHERE term_id = :termID ORDER BY term_id")
+    TermEntity getTerm(int termID);
 
     @Delete
     void delete(TermEntity term);

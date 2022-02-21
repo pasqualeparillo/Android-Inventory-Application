@@ -9,7 +9,7 @@ import com.example.c196_project.DAO.TermDAO;
 import com.example.c196_project.Entities.TermEntity;
 
 
-@Database(entities = {TermEntity.class}, version = 4, exportSchema = false)
+@Database(entities = {TermEntity.class}, version = 5, exportSchema = false)
 public abstract class TermDatabase extends RoomDatabase {
     public abstract TermDAO termDAO();
     private static volatile TermDatabase INSTANCE;
@@ -19,6 +19,7 @@ public abstract class TermDatabase extends RoomDatabase {
             synchronized (TermDatabase.class) {
                 if(INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), TermDatabase.class, "termDatabase")
+                            .allowMainThreadQueries()
                             .fallbackToDestructiveMigration()
                             .build();
                 }

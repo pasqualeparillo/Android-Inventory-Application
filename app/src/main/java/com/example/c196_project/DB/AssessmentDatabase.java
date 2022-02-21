@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.c196_project.DAO.AssessmentDAO;
 import com.example.c196_project.Entities.AssessmentEntity;
 
-@Database(entities = {AssessmentEntity.class}, version = 4, exportSchema = false)
+@Database(entities = {AssessmentEntity.class}, version = 5, exportSchema = false)
 public abstract class AssessmentDatabase extends RoomDatabase {
     public abstract AssessmentDAO assessmentDAO();
     private static volatile AssessmentDatabase INSTANCE;
@@ -19,6 +19,7 @@ public abstract class AssessmentDatabase extends RoomDatabase {
             synchronized (AssessmentDatabase.class) {
                 if(INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(), AssessmentDatabase.class, "assessmentDatabase")
+                            .allowMainThreadQueries()
                             .fallbackToDestructiveMigration()
                             .build();
                 }

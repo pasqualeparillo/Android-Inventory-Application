@@ -1,83 +1,87 @@
 package com.example.c196_project.UI.Assessment;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.example.c196_project.DB.AssessmentDatabase;
+import com.example.c196_project.DB.TermDatabase;
 import com.example.c196_project.Entities.AssessmentEntity;
-import com.example.c196_project.Entities.CourseEntity;
+import com.example.c196_project.Entities.TermEntity;
 import com.example.c196_project.R;
 import com.example.c196_project.Repositories.AssessmentRepository;
-import com.example.c196_project.Repositories.CourseRepository;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.c196_project.UI.Course.CourseDetail;
 
 public class AssessmentDetail extends AppCompatActivity {
-    EditText editAssessmentTitle;
-    EditText editAssessmentID;
-    EditText editAssessmentType;
-    EditText editAssessmentStart;
-    EditText editAssessmentEnd;
-    EditText editAssessmentCourseID;
-    Spinner courseSpinner;
+    AssessmentDatabase assessmentDB;
+    EditText assessmentTitle;
+    EditText assessmentStart;
+    EditText assessmentEnd;
+    Integer assessmentID;
+    Integer courseID;
     String title;
     String type;
-    String start;
-    String end;
-    int courseID;
-    int assessmentID;
-    AssessmentRepository assessmentRepo;
-    CourseRepository courseRepository;
+    String startDate;
+    String endDate;
+    AssessmentRepository repo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_detail);
-        editAssessmentTitle=findViewById(R.id.editAssessmentTitle);
-        editAssessmentID=findViewById(R.id.editAssessmentID);
-        editAssessmentType=findViewById(R.id.editAssessmentType);
-        editAssessmentStart=findViewById(R.id.editAssessmentStart);
-        editAssessmentEnd=findViewById(R.id.editAssessmentEnd);
-        editAssessmentCourseID=findViewById(R.id.editAssessmentCourseID);
-
-        title=getIntent().getStringExtra("title");
-        type=getIntent().getStringExtra("type");
-        start=getIntent().getStringExtra("startDate");
-        end=getIntent().getStringExtra("endDate");
-        courseID=getIntent().getIntExtra("courseID", -1);
+        assessmentDB = AssessmentDatabase.getDatabase(getApplicationContext());
         assessmentID=getIntent().getIntExtra("assessmentID", -1);
-        editAssessmentTitle.setText(title);
-        editAssessmentStart.setText(start);
-        editAssessmentEnd.setText(end);
-        editAssessmentID.setText(Integer.toString(assessmentID));
-        editAssessmentCourseID.setText(Integer.toString(courseID));
-        editAssessmentType.setText(type);
-        courseRepository = new CourseRepository(getApplication());
-        assessmentRepo=new AssessmentRepository(getApplication());
+        courseID=getIntent().getIntExtra("courseID", -1);
+        assessmentTitle=findViewById(R.id.editAssessmentTitle);
+        assessmentStart=findViewById(R.id.editAssessmentStartDate);
+        assessmentEnd=findViewById(R.id.editAssessmentEndDate);
+        type=getIntent().getStringExtra("type");
+        repo=new AssessmentRepository(getApplication());
+
+        String[] arraySpinner = new String[] {
+                "OA", "PA"
+        };
+        Spinner s = (Spinner) findViewById(R.id.editAssessmentType);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, arraySpinner);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        s.setAdapter(adapter);
+        int spinnerPosition = adapter.getPosition(type);
+        s.setSelection(spinnerPosition);
+        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                type = s.getItemAtPosition(i).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+        setValues();
     }
-
-
-
-
+    public void setValues() {
+        AssessmentEntity assessment = assessmentDB.assessmentDAO().getAssessment(assessmentID);
+        assessmentTitle.setText(assessment.getAssessment_title());
+        assessmentStart.setText(assessment.getAssessment_start_date());
+        assessmentEnd.setText(assessment.getAssessment_end_date());
+    }
     public void saveButton(View view) {
+        title=assessmentTitle.getText().toString();
+        startDate=assessmentStart.getText().toString();
+        endDate=assessmentEnd.getText().toString();
         AssessmentEntity assessment;
-        if(assessmentID == -1) {
-            int newID = assessmentRepo.getAllAssessments().get(assessmentRepo.getAllAssessments().size() -1).getCourse_id() + 1;
-            assessment = new AssessmentEntity(newID, editAssessmentTitle.getText().toString(),editAssessmentType.getText().toString(), editAssessmentStart.getText().toString(), editAssessmentEnd.getText().toString(), Integer.parseInt(editAssessmentCourseID.getText().toString()));
-            assessmentRepo.insertAssessment(assessment);
-        } else {
-            assessment = new AssessmentEntity(assessmentID, editAssessmentTitle.getText().toString(),editAssessmentType.getText().toString(), editAssessmentStart.getText().toString(), editAssessmentEnd.getText().toString(), Integer.parseInt(editAssessmentCourseID.getText().toString()));
-            assessmentRepo.updateAssessment(assessment);
-        }
+        assessment = new AssessmentEntity(assessmentID, title, type, startDate, endDate, courseID);
+        repo.updateAssessment(assessment);
+        Intent nextPage = new Intent(AssessmentDetail.this, CourseDetail.class);
+        nextPage.putExtra("courseID", courseID);
+        startActivity(nextPage);
     }
 }

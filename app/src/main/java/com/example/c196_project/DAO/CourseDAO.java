@@ -19,6 +19,9 @@ public interface CourseDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insertAll(List<CourseEntity> course);
 
+    @Query("SELECT * FROM courses WHERE course_ID = :courseID ORDER BY course_id")
+    CourseEntity getCourse(int courseID);
+
     @Delete
     void delete(CourseEntity course);
 

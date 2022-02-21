@@ -5,106 +5,141 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="5dp">
-    <LinearLayout
-        android:layout_width="fill_parent"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_gravity="center"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="4dp"
+        app:cardMaxElevation="4dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="10dp">
-            <TextView
-                android:id="@+id/assessmentNameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Assessment Name:" />
-            <EditText
-                android:id="@+id/courseName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Assessment Name"/>
-        </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="5dp">
 
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
             <TextView
-                android:id="@+id/assessmentTypeOA"
+                android:id="@+id/textView18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="OA" />
-            <RadioButton android:id="@+id/radio_objective"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_performance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"/>
-            <TextView
-                android:id="@+id/assessmentTypePA"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="PA" />
-        </RadioGroup>
-    </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="10dp">
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Start Date" />
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="21dp"
+                android:text="Assessment Title:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textStyle="bold" />
+
             <EditText
-                android:id="@+id/startDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="Start Date"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="10dp">
-            <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/editAssessmentTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="End Date:" />
-            <EditText
-                android:id="@+id/endDate"
-                android:layout_width="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="70dp"
+                android:layout_toEndOf="@+id/textView18"
+                android:minWidth="200dp"
+                android:minHeight="48dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clickable="false"
-                android:cursorVisible="false"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="End Date"/>
-        </LinearLayout>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:clickable="true"
-            android:onClick="saveButton" />
-    </LinearLayout>
+                android:layout_below="@+id/textView18"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="122dp"
+                android:text="Assessment Start:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editAssessmentStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="150dp"
+                android:layout_marginEnd="71dp"
+                android:layout_toEndOf="@+id/textView21"
+                android:minWidth="200dp"
+                android:minHeight="48dp"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="275dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView18"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="198dp"
+                android:text="Assessment End:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editAssessmentEndDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="34dp"
+                android:layout_marginTop="221dp"
+                android:layout_marginEnd="75dp"
+                android:layout_toEndOf="@+id/textView20"
+                android:minWidth="200dp"
+                android:minHeight="48dp"
+                android:text="TextView"
+                tools:layout_editor_absoluteX="275dp"
+                tools:layout_editor_absoluteY="25dp" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textView18"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="38dp"
+                android:text="Assessment Type:"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/editAssessmentType"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="23dp"
+                android:layout_marginTop="78dp"
+                android:layout_toEndOf="@+id/textView19"
+                android:contentDescription="assessmentType"
+                android:minHeight="48dp" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
+        android:onClick="saveButton"
+        android:text="Save"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

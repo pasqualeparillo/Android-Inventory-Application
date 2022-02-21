@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,13 +14,9 @@ import android.widget.Spinner;
 import android.widget.Switch;
 
 import com.example.c196_project.Entities.CourseEntity;
-import com.example.c196_project.Entities.TermEntity;
 import com.example.c196_project.R;
 import com.example.c196_project.Repositories.CourseRepository;
-import com.example.c196_project.Repositories.TermRepository;
-import com.example.c196_project.UI.Term.TermAdd;
 import com.example.c196_project.UI.Term.TermDetail;
-import com.example.c196_project.UI.Term.TermList;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,6 +30,9 @@ public class CourseAdd extends AppCompatActivity {
     EditText endDateText;
     EditText courseTitle;
     EditText courseNote;
+    EditText courseEditInstructorName;
+    EditText courseEditInstructorEmail;
+    EditText courseEditInstructorPhone;
     Switch courseAlert;
     String courseStatus;
     @Override
@@ -48,6 +46,9 @@ public class CourseAdd extends AppCompatActivity {
         courseAlert=findViewById(R.id.addCourseAlert);
         startDateText=(EditText) findViewById(R.id.startDate);
         endDateText=(EditText) findViewById(R.id.endDate);
+        courseEditInstructorName=findViewById(R.id.courseEditInstructorName);
+        courseEditInstructorEmail=findViewById(R.id.courseEditInstructorEmail);
+        courseEditInstructorPhone=findViewById(R.id.courseEditInstructorPhone);
         DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -81,7 +82,7 @@ public class CourseAdd extends AppCompatActivity {
         String[] arraySpinner = new String[] {
                 "In Progress", "Completed", "Dropped", "Plan to Take"
         };
-        Spinner s = (Spinner) findViewById(R.id.courseStatusSpinner);
+        Spinner s = (Spinner) findViewById(R.id.editAssessmentType);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, arraySpinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -112,10 +113,10 @@ public class CourseAdd extends AppCompatActivity {
         boolean alert = courseAlert.isChecked();
         CourseEntity course;
         if(repo.getAllCourses().size() == 0) {
-            course = new CourseEntity(1, courseTitle.getText().toString(), startDateText.getText().toString(), endDateText.getText().toString(), courseStatus, courseNote.getText().toString(),alert, termID, "", "", "");
+            course = new CourseEntity(1, courseTitle.getText().toString(), startDateText.getText().toString(), endDateText.getText().toString(), courseStatus, courseNote.getText().toString(),alert, termID, courseEditInstructorName.getText().toString(), courseEditInstructorPhone.getText().toString(), courseEditInstructorEmail.getText().toString());
         } else {
             int newID = repo.getAllCourses().get(repo.getAllCourses().size() -1).getCourse_id() + 1;
-            course = new CourseEntity(newID, courseTitle.getText().toString(), startDateText.getText().toString(), endDateText.getText().toString(), courseStatus, courseNote.getText().toString(),alert, termID, "", "", "");
+            course = new CourseEntity(newID, courseTitle.getText().toString(), startDateText.getText().toString(), endDateText.getText().toString(), courseStatus, courseNote.getText().toString(),alert, termID, courseEditInstructorName.getText().toString(), courseEditInstructorPhone.getText().toString(), courseEditInstructorEmail.getText().toString());
         }
         repo.insertCourse(course);
         Intent intent = new Intent(CourseAdd.this, TermDetail.class);

@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.c196_project.DB.CourseDatabase;
+import com.example.c196_project.DB.TermDatabase;
 import com.example.c196_project.Entities.AssessmentEntity;
 import com.example.c196_project.Entities.CourseEntity;
 import com.example.c196_project.Entities.TermEntity;
@@ -28,6 +30,7 @@ import java.util.List;
 
 public class TermDetail extends AppCompatActivity {
     int termID;
+    TermDatabase termDB;
     String termTitle;
     String termStart;
     String termEnd;
@@ -38,16 +41,12 @@ public class TermDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_detail);
+        termDB = TermDatabase.getDatabase(getApplicationContext());
         termID=getIntent().getIntExtra("termID", -1);
-        termTitle=getIntent().getStringExtra("title");
-        termStart=getIntent().getStringExtra("startDate");
-        termEnd=getIntent().getStringExtra("endDate");
         termTitleView=findViewById(R.id.termName);
         termStartView=findViewById(R.id.termStart);
         termEndView=findViewById(R.id.termEnd);
-        termTitleView.setText(termTitle);
-        termStartView.setText(termStart);
-        termEndView.setText(termEnd);
+
         //Get courses for term.
         RecyclerView recyclerView = findViewById(R.id.recycler_view5);
         CourseRepository repository = new CourseRepository(getApplication());
@@ -58,12 +57,17 @@ public class TermDetail extends AppCompatActivity {
                 filteredCourses.add(course);
             }
         }
-
         CourseAdapter adapter = new CourseAdapter(getApplicationContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.setCourses(filteredCourses);
-
+        setValues();
+    }
+    public void setValues() {
+        TermEntity term = termDB.termDAO().getTerm(termID);
+        termTitleView.setText(term.getTitle());
+        termStartView.setText(term.getStartDate());
+        termEndView.setText(term.getEndDate());
     }
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_courselist, menu);
@@ -78,7 +82,6 @@ public class TermDetail extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     public void goToAddCourse(View view) {
-
         Intent nextPage = new Intent(TermDetail.this, CourseAdd.class);
         nextPage.putExtra("termID", termID);
         nextPage.putExtra("termTitle", termTitle);
