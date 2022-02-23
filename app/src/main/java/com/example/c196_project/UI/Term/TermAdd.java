@@ -9,10 +9,8 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.c196_project.Entities.AssessmentEntity;
 import com.example.c196_project.Entities.TermEntity;
 import com.example.c196_project.R;
-import com.example.c196_project.Repositories.AssessmentRepository;
 import com.example.c196_project.Repositories.TermRepository;
 
 import java.text.SimpleDateFormat;
@@ -29,10 +27,11 @@ public class TermAdd  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_add);
-        editTermTitle=findViewById(R.id.termName);
-        startDateText=(EditText) findViewById(R.id.termStart);
-        endDateText=(EditText) findViewById(R.id.termEnd);
+        editTermTitle=findViewById(R.id.termTitleView);
+        startDateText=(EditText) findViewById(R.id.termStartView);
+        endDateText=(EditText) findViewById(R.id.termEndView);
         repo=new TermRepository(getApplication());
+        //Start Date Picker
         DatePickerDialog.OnDateSetListener date =new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {

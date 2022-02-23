@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(nextScreen);
         TermRepository repo=new TermRepository(getApplication());
         CourseRepository courseRepo=new CourseRepository(getApplication());
-        TermEntity term=new TermEntity(2, "test", "type", "dateStart");
+        TermEntity term=new TermEntity(2, "test", "1/2/2022", "2/3/2022");
         CourseEntity course=new CourseEntity(1, "test", "type", "dateStart", "whatever", "whatever",false, 1, "", "", "");
         repo.insertTerm(term);
         courseRepo.insertCourse(course);

@@ -3,15 +3,17 @@ package com.example.c196_project.UI.Course;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.example.c196_project.DB.CourseDatabase;
 import com.example.c196_project.Entities.AssessmentEntity;
@@ -23,8 +25,12 @@ import com.example.c196_project.UI.Adapter.AssessmentAdapter;
 import com.example.c196_project.UI.Assessment.AssessmentAdd;
 import com.example.c196_project.UI.Term.TermDetail;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 public class CourseDetail extends AppCompatActivity {
     CourseDatabase courseDB;
@@ -37,8 +43,9 @@ public class CourseDetail extends AppCompatActivity {
     EditText editInstructorEmail;
     EditText editInstructorPhone;
     String courseStatus;
-
+    Switch courseAlert;
     int courseID;
+    int termID;
     CourseRepository repo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +53,7 @@ public class CourseDetail extends AppCompatActivity {
         setContentView(R.layout.activity_course_detail);
         courseDB = CourseDatabase.getDatabase(getApplicationContext());
         courseID = getIntent().getIntExtra("courseID", -1);
+        termID = getIntent().getIntExtra("termID", -1);
         editCourseTitle=findViewById(R.id.editAssessmentTitle);
         editCourseType=findViewById(R.id.editCourseType);
         editCourseStart=findViewById(R.id.editCourseStart);
@@ -54,6 +62,9 @@ public class CourseDetail extends AppCompatActivity {
         editInstructorName=findViewById(R.id.editInstructorName);
         editInstructorEmail=findViewById(R.id.editInstructorEmail);
         editInstructorPhone=findViewById(R.id.editInstructorPhone);
+        courseAlert=findViewById(R.id.courseAlertToggle);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         setValues();
 
@@ -94,10 +105,10 @@ public class CourseDetail extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         assessmentAdapter.setAssessments(filteredAssessments);
     }
+
     public void setValues() {
         CourseEntity course = courseDB.courseDAO().getCourse(courseID);
         editCourseTitle.setText(course.getCourse_title());
-        editCourseType.setText(course.getCourse_status());
         editCourseStart.setText(course.getCourse_start_date());
         editCourseEnd.setText(course.getCourse_end_date());
         editCourseNote.setText(course.getCourse_note());
@@ -105,26 +116,122 @@ public class CourseDetail extends AppCompatActivity {
         editInstructorEmail.setText(course.getInstructor_email());
         editInstructorPhone.setText(course.getInstructor_phone());
     }
-    public void saveButton(View view) {
-        CourseEntity course;
-        if(courseID == -1) {
-            int newID = repo.getAllCourses().get(repo.getAllCourses().size() -1).getCourse_id() + 1;
-            //course = new CourseEntity();
-            //repo.insertCourse(course);
-        } else {
-            //course = new CourseEntity();
-            //repo.updateCourse(course);
-        }
-        Intent nextPage = new Intent(CourseDetail.this, TermDetail.class);
-        nextPage.putExtra("termID", getIntent().getIntExtra("termID", -1));
-        nextPage.putExtra("courseID", courseID);
-        startActivity(nextPage);
-    }
 
+    // Menu Start
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_detail, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            case R.id.share:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Take a look at my Course Notes.");
+                sendIntent.putExtra(Intent.EXTRA_TITLE, editCourseNote.getText().toString());
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+                return true;
+            case R.id.notify:
+                return true;
+
+            case R.id.delete:
+                boolean deleteCourse = false;
+                AssessmentRepository assessmentRepository = new AssessmentRepository(getApplication());
+                CourseRepository courseRepository = new CourseRepository(getApplication());
+                List<AssessmentEntity> allAssessments = assessmentRepository.getAllAssessments();
+                for(AssessmentEntity assessment: allAssessments) {
+                    if(assessment.getCourse_id() == courseID) {
+                        deleteCourse = true;
+                        Toast.makeText(CourseDetail.this,"Can't delete a course with assessments", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                }
+                if(!deleteCourse) {
+                    for(CourseEntity course: courseRepository.getAllCourses()) {
+                        if(course.getCourse_id() == courseID) {
+
+                            Intent nextPage = new Intent(CourseDetail.this, TermDetail.class);
+                            nextPage.putExtra("termID", getIntent().getIntExtra("termID", -1));
+                            courseRepository.deleteCourse(course);
+                            Toast.makeText(CourseDetail.this,"Course Deleted", Toast.LENGTH_LONG).show();
+                            startActivity(nextPage);
+
+                        }
+                    }
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    //Menu End
     public void goToAddAssessments(View view) {
         Intent nextPage = new Intent(CourseDetail.this, AssessmentAdd.class);
         nextPage.putExtra("courseID", courseID);
         nextPage.putExtra("termID", getIntent().getIntExtra("termID", -1));
+        startActivity(nextPage);
+    }
+    public void saveButton(View view) {
+        CourseEntity course;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        String name = editCourseTitle.getText().toString();
+        String sDate = editCourseStart.getText().toString();
+        String eDate = editCourseEnd.getText().toString();
+        Date startDate = null;
+        Date endDate = null;
+        try{
+            startDate = simpleDateFormat.parse(sDate);
+            endDate = simpleDateFormat.parse(eDate);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if (name.trim().isEmpty()) {
+            Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (startDate.after(endDate)) {
+            Toast.makeText(this, "Start date cant be after the end date", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (sDate.trim().isEmpty()) {
+            Toast.makeText(this, "Start date is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (eDate.trim().isEmpty()) {
+            Toast.makeText(this, "End date is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (editInstructorName.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Instructor Name is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (editInstructorEmail.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Instructor Email is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (editInstructorPhone.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Instructor Phone is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        saveCourse();
+    }
+    private void saveCourse() {
+        boolean alert = courseAlert.isChecked();
+        for(CourseEntity course: repo.getAllCourses()) {
+            if(course.getCourse_id() == courseID) {
+                CourseEntity courseUpdate = new CourseEntity(course.getCourse_id(), editCourseTitle.getText().toString(), editCourseStart.getText().toString(), editCourseEnd.getText().toString(), editCourseType.getText().toString(), editCourseNote.getText().toString(), alert, course.getTerm_id(), editInstructorName.getText().toString(), editInstructorPhone.getText().toString(), editInstructorEmail.getText().toString());
+                repo.updateCourse(courseUpdate);
+            }
+        }
+        Intent nextPage = new Intent(CourseDetail.this, TermDetail.class);
+        nextPage.putExtra("termID", getIntent().getIntExtra("termID", -1));
+        nextPage.putExtra("courseID", courseID);
         startActivity(nextPage);
     }
 }
