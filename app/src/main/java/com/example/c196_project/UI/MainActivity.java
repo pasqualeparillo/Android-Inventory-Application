@@ -18,7 +18,7 @@ import com.example.c196_project.UI.Course.CourseList;
 import com.example.c196_project.UI.Term.TermList;
 
 public class MainActivity extends AppCompatActivity {
-
+    public static int alertCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

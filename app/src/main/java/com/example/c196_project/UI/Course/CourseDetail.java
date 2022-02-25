@@ -3,6 +3,10 @@ package com.example.c196_project.UI.Course;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,6 +27,8 @@ import com.example.c196_project.Repositories.AssessmentRepository;
 import com.example.c196_project.Repositories.CourseRepository;
 import com.example.c196_project.UI.Adapter.AssessmentAdapter;
 import com.example.c196_project.UI.Assessment.AssessmentAdd;
+import com.example.c196_project.UI.MainActivity;
+import com.example.c196_project.UI.Receiver;
 import com.example.c196_project.UI.Term.TermDetail;
 
 import java.text.SimpleDateFormat;
@@ -120,11 +126,14 @@ public class CourseDetail extends AppCompatActivity {
     // Menu Start
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_multi, menu);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        String name = editCourseTitle.getText().toString();
+        String sDate = editCourseStart.getText().toString();
+        String eDate = editCourseEnd.getText().toString();
         switch (item.getItemId()) {
             case android.R.id.home:
                 this.finish();
@@ -138,9 +147,39 @@ public class CourseDetail extends AppCompatActivity {
                 Intent shareIntent = Intent.createChooser(sendIntent, null);
                 startActivity(shareIntent);
                 return true;
-            case R.id.notify:
-                return true;
 
+            case R.id.startAlert:
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+
+                Date startDate = null;
+                Long curDate = new Date().getTime();
+                try{
+                    startDate = simpleDateFormat.parse(sDate);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                Intent notifyStart = new Intent(CourseDetail.this, Receiver.class);
+                notifyStart.putExtra("key", "Your " + name + " course is starting today on: " + startDate);
+                PendingIntent pendingStart = PendingIntent.getBroadcast(CourseDetail.this, ++MainActivity.alertCount, notifyStart, 0);
+                AlarmManager alarm = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                alarm.set(AlarmManager.RTC_WAKEUP, curDate, pendingStart);
+                return true;
+            case R.id.endAlert:
+                SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+
+                Date endDate = null;
+                Long curDate2 = new Date().getTime();
+                try{
+                    endDate = simpleDateFormat2.parse(eDate);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                Intent notifyStart2 = new Intent(CourseDetail.this, Receiver.class);
+                notifyStart2.putExtra("key", "Your " + name + " course is starting today on: " + endDate);
+                PendingIntent pendingStart2 = PendingIntent.getBroadcast(CourseDetail.this, ++MainActivity.alertCount, notifyStart2, 0);
+                AlarmManager alarm2 = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+                alarm2.set(AlarmManager.RTC_WAKEUP, curDate2, pendingStart2);
+                return true;
             case R.id.delete:
                 boolean deleteCourse = false;
                 AssessmentRepository assessmentRepository = new AssessmentRepository(getApplication());
@@ -177,6 +216,8 @@ public class CourseDetail extends AppCompatActivity {
         nextPage.putExtra("termID", getIntent().getIntExtra("termID", -1));
         startActivity(nextPage);
     }
+
+
     public void saveButton(View view) {
         CourseEntity course;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
@@ -195,10 +236,6 @@ public class CourseDetail extends AppCompatActivity {
             Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (startDate.after(endDate)) {
-            Toast.makeText(this, "Start date cant be after the end date", Toast.LENGTH_SHORT).show();
-            return;
-        }
         if (sDate.trim().isEmpty()) {
             Toast.makeText(this, "Start date is required", Toast.LENGTH_SHORT).show();
             return;
@@ -207,6 +244,11 @@ public class CourseDetail extends AppCompatActivity {
             Toast.makeText(this, "End date is required", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (startDate.after(endDate)) {
+            Toast.makeText(this, "Start date cant be after the end date", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (editInstructorName.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Instructor Name is required", Toast.LENGTH_SHORT).show();
             return;

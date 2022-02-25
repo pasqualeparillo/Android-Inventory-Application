@@ -29,6 +29,7 @@ import com.example.c196_project.UI.Term.TermDetail;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -134,7 +135,7 @@ public class AssessmentDetail extends AppCompatActivity {
     // Menu Start
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_detail, menu);
+        getMenuInflater().inflate(R.menu.menu_save_delete, menu);
         return true;
     }
 
@@ -144,17 +145,8 @@ public class AssessmentDetail extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
-            case R.id.share:
-
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Take a look at my Course Notes.");
-                sendIntent.putExtra(Intent.EXTRA_TITLE, assessmentTitle.getText().toString());
-                sendIntent.setType("text/plain");
-                Intent shareIntent = Intent.createChooser(sendIntent, null);
-                startActivity(shareIntent);
-                return true;
-            case R.id.notify:
+            case R.id.save:
+                saveButton();
                 return true;
 
             case R.id.delete:
@@ -172,15 +164,48 @@ public class AssessmentDetail extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     //Menu End
-    public void saveButton(View view) {
+
+    public void saveButton() {
+        String name=assessmentTitle.getText().toString();
+        String sDate=assessmentStart.getText().toString();
+        String eDate=assessmentEnd.getText().toString();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        Date startDate = null;
+        Date endDate = null;
+        try{
+            startDate = simpleDateFormat.parse(sDate);
+            endDate = simpleDateFormat.parse(eDate);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if (name.trim().isEmpty()) {
+            Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (sDate.trim().isEmpty()) {
+            Toast.makeText(this, "Start date is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (eDate.trim().isEmpty()) {
+            Toast.makeText(this, "End date is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (startDate.after(endDate)) {
+            Toast.makeText(this, "Start date cant be after the end date", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        saveAssessment();
+    }
+
+    public void saveAssessment() {
         title=assessmentTitle.getText().toString();
         startDate=assessmentStart.getText().toString();
         endDate=assessmentEnd.getText().toString();
         AssessmentEntity assessment;
         assessment = new AssessmentEntity(assessmentID, title, type, startDate, endDate, courseID);
         repo.updateAssessment(assessment);
-        Intent nextPage = new Intent(AssessmentDetail.this, CourseDetail.class);
-        nextPage.putExtra("courseID", courseID);
-        startActivity(nextPage);
+        Intent intent = new Intent(AssessmentDetail.this, CourseDetail.class);
+        intent.putExtra("courseID", courseID);
+        startActivity(intent);
     }
 }

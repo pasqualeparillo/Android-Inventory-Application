@@ -126,7 +126,7 @@ public class TermDetail extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_refresh, menu);
+        getMenuInflater().inflate(R.menu.menu_save_delete, menu);
         return true;
     }
     @Override
@@ -135,18 +135,9 @@ public class TermDetail extends AppCompatActivity {
             case android.R.id.home:
                 this.finish();
                 return true;
-            case R.id.share:
-                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Take a look at my Term");
-                sendIntent.putExtra(Intent.EXTRA_TITLE, termTitle);
-                sendIntent.setType("text/plain");
-                Intent shareIntent = Intent.createChooser(sendIntent, termTitle);
-                startActivity(shareIntent);
+            case R.id.save:
+                saveButton();
                 return true;
-            case R.id.notify:
-                return true;
-
             case R.id.delete:
                 boolean deleteTerm = false;
                 CourseRepository courseRepository = new CourseRepository(getApplication());
@@ -182,7 +173,7 @@ public class TermDetail extends AppCompatActivity {
         startActivity(nextPage);
     }
 
-    public void saveButton(View view) {
+    public void saveButton() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         String name = termTitleView.getText().toString();
         String sDate = termStartView.getText().toString();
@@ -201,10 +192,6 @@ public class TermDetail extends AppCompatActivity {
             Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (startDate.after(endDate)) {
-            Toast.makeText(this, "Start date cant be after the end date", Toast.LENGTH_SHORT).show();
-            return;
-        }
         if (sDate.trim().isEmpty()) {
             Toast.makeText(this, "Start date is required", Toast.LENGTH_SHORT).show();
             return;
@@ -213,6 +200,11 @@ public class TermDetail extends AppCompatActivity {
             Toast.makeText(this, "End date is required", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (startDate.after(endDate)) {
+            Toast.makeText(this, "Start date cant be after the end date", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         saveTerm();
     }
     public void saveTerm() {

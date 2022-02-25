@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -105,6 +107,24 @@ public class CourseAdd extends AppCompatActivity {
             }
         });
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_save, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            case R.id.save:
+                saveButton();
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void updateStartLabel(){
         String myFormat="MM/dd/yy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
@@ -116,8 +136,7 @@ public class CourseAdd extends AppCompatActivity {
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
         endDateText.setText(dateFormat.format(myDate.getTime()));
     }
-    public void saveButton(View view) {
-        CourseEntity course;
+    public void saveButton() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
         String name = courseTitle.getText().toString();
         String sDate = startDateText.getText().toString();
@@ -134,10 +153,6 @@ public class CourseAdd extends AppCompatActivity {
             Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (startDate.after(endDate)) {
-            Toast.makeText(this, "Start date cant be after the end date", Toast.LENGTH_SHORT).show();
-            return;
-        }
         if (sDate.trim().isEmpty()) {
             Toast.makeText(this, "Start date is required", Toast.LENGTH_SHORT).show();
             return;
@@ -146,6 +161,11 @@ public class CourseAdd extends AppCompatActivity {
             Toast.makeText(this, "End date is required", Toast.LENGTH_SHORT).show();
             return;
         }
+        if (startDate.after(endDate)) {
+            Toast.makeText(this, "Start date cant be after the end date", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         if (courseEditInstructorName.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Instructor Name is required", Toast.LENGTH_SHORT).show();
             return;

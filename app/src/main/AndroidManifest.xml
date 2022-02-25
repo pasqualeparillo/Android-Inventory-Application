@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.C196Project">
+        <receiver android:name=".UI.Receiver"
+            android:enabled="true"
+            android:exported="true">
+
+        </receiver>
         <activity
             android:name=".UI.Course.CourseAdd"
             android:exported="false"

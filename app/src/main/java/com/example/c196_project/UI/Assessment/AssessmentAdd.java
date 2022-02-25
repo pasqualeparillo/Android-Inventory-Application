@@ -4,6 +4,8 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,16 +17,22 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.c196_project.Entities.AssessmentEntity;
+import com.example.c196_project.Entities.CourseEntity;
+import com.example.c196_project.Entities.TermEntity;
 import com.example.c196_project.R;
 import com.example.c196_project.Repositories.AssessmentRepository;
+import com.example.c196_project.Repositories.CourseRepository;
+import com.example.c196_project.Repositories.TermRepository;
 import com.example.c196_project.UI.Course.CourseAdd;
 import com.example.c196_project.UI.Course.CourseDetail;
 import com.example.c196_project.UI.Term.TermAdd;
 import com.example.c196_project.UI.Term.TermDetail;
+import com.example.c196_project.UI.Term.TermList;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class AssessmentAdd extends AppCompatActivity {
@@ -102,7 +110,24 @@ public class AssessmentAdd extends AppCompatActivity {
             }
         });
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_save, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            case R.id.save:
+                saveButton();
+                return true;
 
+        }
+        return super.onOptionsItemSelected(item);
+    }
     private void updateStartLabel(){
         String myFormat="MM/dd/yy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
@@ -113,7 +138,7 @@ public class AssessmentAdd extends AppCompatActivity {
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
         assessmentEnd.setText(dateFormat.format(myDate.getTime()));
     }
-    public void saveButton(View view) {
+    public void saveButton() {
         String name=assessmentTitle.getText().toString();
         String sDate=assessmentStart.getText().toString();
         String eDate=assessmentEnd.getText().toString();
@@ -131,16 +156,16 @@ public class AssessmentAdd extends AppCompatActivity {
             Toast.makeText(this, "Title is required", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (startDate.after(endDate)) {
-            Toast.makeText(this, "Start date cant be after the end date", Toast.LENGTH_SHORT).show();
-            return;
-        }
         if (sDate.trim().isEmpty()) {
             Toast.makeText(this, "Start date is required", Toast.LENGTH_SHORT).show();
             return;
         }
         if (eDate.trim().isEmpty()) {
             Toast.makeText(this, "End date is required", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (startDate.after(endDate)) {
+            Toast.makeText(this, "Start date cant be after the end date", Toast.LENGTH_SHORT).show();
             return;
         }
         saveAssessment();
