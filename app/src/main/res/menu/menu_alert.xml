@@ -9,15 +9,11 @@
         android:orderInCategory="100"
         app:showAsAction="never"
         android:id="@+id/delete"/>
-    <item android:title="Share"
-        android:orderInCategory="100"
-        app:showAsAction="never"
-        android:id="@+id/share"/>
-    <item android:title="Course Start Date Alert"
+    <item android:title="Assessment Start Date Alert"
         android:orderInCategory="100"
         app:showAsAction="never"
         android:id="@+id/startAlert"/>
-    <item android:title="Course End Date Alert"
+    <item android:title="Assessment Goal/End Date Alert"
         android:orderInCategory="100"
         app:showAsAction="never"
         android:id="@+id/endAlert"/>

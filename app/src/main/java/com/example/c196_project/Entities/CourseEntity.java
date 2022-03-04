@@ -21,8 +21,6 @@ public class CourseEntity {
     private String course_status;
     @ColumnInfo(name = "course_note")
     private String course_note;
-    @ColumnInfo(name = "course_alert")
-    private boolean course_alert;
     @ColumnInfo(name = "term_id")
     private int term_id;
     @ColumnInfo(name = "instructor_name")
@@ -32,14 +30,13 @@ public class CourseEntity {
     @ColumnInfo(name = "instructor_email")
     private String instructor_email;
 
-    public CourseEntity(int course_id, String course_title, String course_start_date, String course_end_date, String course_status, String course_note,boolean course_alert, int term_id, String instructor_name, String instructor_phone, String instructor_email) {
+    public CourseEntity(int course_id, String course_title, String course_start_date, String course_end_date, String course_status, String course_note,int term_id, String instructor_name, String instructor_phone, String instructor_email) {
         this.course_id = course_id;
         this.course_title = course_title;
         this.course_start_date = course_start_date;
         this.course_end_date = course_end_date;
         this.course_status = course_status;
         this.course_note = course_note;
-        this.course_alert = course_alert;
         this.term_id = term_id;
         this.instructor_name = instructor_name;
         this.instructor_phone = instructor_phone;
@@ -92,14 +89,6 @@ public class CourseEntity {
 
     public void setCourse_note(String course_note) {
         this.course_note = course_note;
-    }
-
-    public boolean isCourse_alert() {
-        return course_alert;
-    }
-
-    public void setCourse_alert(boolean course_alert) {
-        this.course_alert = course_alert;
     }
 
     public int getTerm_id() {

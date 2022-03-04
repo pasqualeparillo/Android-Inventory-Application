@@ -13,8 +13,8 @@
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout-land/activity_assessment_add.xml" value="0.128" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout-land/activity_assessment_detail.xml" value="0.12604166666666666" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout-land/activity_assessment_list.xml" value="0.12604166666666666" />
-        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout-land/activity_course_add.xml" value="0.12604166666666666" />
-        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout-land/activity_course_detail.xml" value="0.12604166666666666" />
+        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout-land/activity_course_add.xml" value="0.16" />
+        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout-land/activity_course_detail.xml" value="0.176" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout-land/activity_term_add.xml" value="0.12604166666666666" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout-land/activity_term_detail.xml" value="0.12604166666666666" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout-land/activity_term_list.xml" value="0.4" />
@@ -27,7 +27,7 @@
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_assessment_to_course.xml" value="0.1852355072463768" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_class_list.xml" value="0.1322463768115942" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_course_add.xml" value="0.22" />
-        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_course_detail.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_course_detail.xml" value="0.176" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_course_item.xml" value="0.25" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_course_list.xml" value="0.16" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_course_to_term.xml" value="0.1852355072463768" />
@@ -42,6 +42,7 @@
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/activity_term_list.xml" value="0.2" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/assessment_item.xml" value="0.15670289855072464" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/layout/gradientbackground.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/menu/menu_alert.xml" value="0.22407407407407406" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/menu/menu_course_detail.xml" value="0.22407407407407406" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/menu/menu_courselist.xml" value="0.25" />
         <entry key="..\:/Users/pparillo/AndroidStudioProjects/C196Project/app/src/main/res/menu/menu_detail.xml" value="0.22407407407407406" />

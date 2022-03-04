@@ -91,7 +91,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="198dp"
-                android:text="Assessment End:"
+                android:text="Assessment Goal/End:"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                 android:textStyle="bold" />
 

@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.example.c196_project.Entities.CourseEntity;
@@ -37,7 +36,6 @@ public class CourseAdd extends AppCompatActivity {
     EditText courseEditInstructorName;
     EditText courseEditInstructorEmail;
     EditText courseEditInstructorPhone;
-    Switch courseAlert;
     String courseStatus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +45,11 @@ public class CourseAdd extends AppCompatActivity {
         repo=new CourseRepository(getApplication());
         courseTitle=findViewById(R.id.courseTitle);
         courseNote=findViewById(R.id.courseNote);
-        courseAlert=findViewById(R.id.addCourseAlert);
         startDateText=(EditText) findViewById(R.id.startDate);
         endDateText=(EditText) findViewById(R.id.endDate);
-        courseEditInstructorName=findViewById(R.id.courseEditInstructorName);
-        courseEditInstructorEmail=findViewById(R.id.courseEditInstructorEmail);
-        courseEditInstructorPhone=findViewById(R.id.courseEditInstructorPhone);
+        courseEditInstructorName=findViewById(R.id.editInstructorName);
+        courseEditInstructorEmail=findViewById(R.id.editInstructorEmail);
+        courseEditInstructorPhone=findViewById(R.id.editInstructorPhone);
 
         String[] arraySpinner = new String[] {
                 "In Progress", "Completed", "Dropped", "Plan to Take"
@@ -181,13 +178,12 @@ public class CourseAdd extends AppCompatActivity {
         saveCourse();
     }
     public void saveCourse() {
-        boolean alert = courseAlert.isChecked();
         CourseEntity course;
         if(repo.getAllCourses().size() == 0) {
-            course = new CourseEntity(1, courseTitle.getText().toString(), startDateText.getText().toString(), endDateText.getText().toString(), courseStatus, courseNote.getText().toString(),alert, termID, courseEditInstructorName.getText().toString(), courseEditInstructorPhone.getText().toString(), courseEditInstructorEmail.getText().toString());
+            course = new CourseEntity(1, courseTitle.getText().toString(), startDateText.getText().toString(), endDateText.getText().toString(), courseStatus, courseNote.getText().toString(), termID, courseEditInstructorName.getText().toString(), courseEditInstructorPhone.getText().toString(), courseEditInstructorEmail.getText().toString());
         } else {
             int newID = repo.getAllCourses().get(repo.getAllCourses().size() -1).getCourse_id() + 1;
-            course = new CourseEntity(newID, courseTitle.getText().toString(), startDateText.getText().toString(), endDateText.getText().toString(), courseStatus, courseNote.getText().toString(),alert, termID, courseEditInstructorName.getText().toString(), courseEditInstructorPhone.getText().toString(), courseEditInstructorEmail.getText().toString());
+            course = new CourseEntity(newID, courseTitle.getText().toString(), startDateText.getText().toString(), endDateText.getText().toString(), courseStatus, courseNote.getText().toString(), termID, courseEditInstructorName.getText().toString(), courseEditInstructorPhone.getText().toString(), courseEditInstructorEmail.getText().toString());
         }
         repo.insertCourse(course);
         Intent intent = new Intent(CourseAdd.this, TermDetail.class);

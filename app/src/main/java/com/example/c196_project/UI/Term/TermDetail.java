@@ -118,7 +118,6 @@ public class TermDetail extends AppCompatActivity {
 
     public void setValues() {
         TermEntity term = termDB.termDAO().getTerm(termID);
-        Log.d("TermID", Integer.toString(termID));
         termTitleView.setText(term.getTitle());
         termStartView.setText(term.getStartDate());
         termEndView.setText(term.getEndDate());

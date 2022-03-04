@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import com.example.c196_project.DAO.CourseDAO;
 import com.example.c196_project.Entities.CourseEntity;
 
-@Database(entities = {CourseEntity.class}, version = 7, exportSchema = false)
+@Database(entities = {CourseEntity.class}, version = 8, exportSchema = false)
 public abstract class CourseDatabase extends RoomDatabase {
     public abstract CourseDAO courseDAO();
     private static volatile CourseDatabase INSTANCE;
